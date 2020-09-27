@@ -16,6 +16,6 @@ const columns = [
 
 export default () =>{
     return (
-        <div>Pd</div>
+        <div>User</div>
     )
 }

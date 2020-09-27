@@ -1,19 +1,44 @@
 import React from 'react';
-import User from 'container/User';
-import Pd from 'container/Pd';
+
+import Login from 'container/Login';
+
 import Home from 'container/Home';
-import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
  
-// import {
-//     BrowserRouter as Router,
-//     Switch,
-//     Route
-// } from "react-router-dom";
+import QuestionManagementRoute from 'container/QuestionManagement/route';
+import PapersManagmentRoute from 'container/PapersManagement/route';
+
+
+import {
+    BrowserRouter as Router,
+    Switch,Redirect,
+    Route
+} from "react-router-dom";
+
+const PrivateRoute = ({children, ...rest}) => (
+    <Route
+        { ...rest }
+        render={({location})=>sessionStorage.getItem('token')?
+            children:
+            <Redirect 
+                to={{
+                    pathname:"/login",
+                    state:{ from:location }
+                }} 
+            />}
+    />
+)
+
 export default ()=>(
-    <Router history={browserHistory}>
-        <Route path="/" component={Home}>
-            <Route path="/Pd" component={Pd} />
-            <Route path="/User" component={User} />
-        </Route>
+    <Router>
+        <Switch>
+            <Route path="/login" component={Login} />
+            <PrivateRoute path="/home">
+                <Home>
+                    <Redirect to="/home/Pd" />
+                    <QuestionManagementRoute />
+                    <PapersManagmentRoute />
+                </Home>
+            </PrivateRoute>
+        </Switch>
     </Router>
 )
