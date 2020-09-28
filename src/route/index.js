@@ -13,39 +13,22 @@ import {
     Route
 } from "react-router-dom";
 
-const HOMEPATH = '/home';
-
-const PrivateRoute = ({children, ...rest}) => (
-    <Route
-        { ...rest }
-        render={({location})=>sessionStorage.getItem('token')?
-            children:
-            <Redirect 
-                to={{
-                    pathname:"/login",
-                    state:{ from:location }
-                }} 
-            />}
-    />
-)
-
 export default ()=>(
     <Router>
         <Switch>
-            <Route path="/login" component={Login} />
-            <PrivateRoute path={HOMEPATH}>
+            <Route path="/">
                 <Home>
                     <Switch>
-                        <Redirect exact from={HOMEPATH} to={`${HOMEPATH}/papers/Pd`} />
-                        <Route path={`${HOMEPATH}/papers`}>
+                        <Redirect exact from="/" to="/papers/Pd" />
+                        <Route path="/papers">
                             <PapersManagmentRoute />
                         </Route>
-                        <Route path={`${HOMEPATH}/question`}>
+                        <Route path="/question">
                             <QuestionManagementRoute />
                         </Route>
                     </Switch>
                 </Home>
-            </PrivateRoute>
+            </Route>
         </Switch>
     </Router>
 )

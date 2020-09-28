@@ -1,35 +1,35 @@
 const menus = [
     {
-        menuName:'赛题管理',
-        key:'question',
-        childs:[
+        name:'赛题管理',
+        key:'question',//同url相关，用于刷新页面保持所选中菜单的展开状态
+        children:[
             {
-                menuName:'pd',
+                name:'pd',
                 key:'pd',
-                childs:[
+                children:[
                     {
-                        menuName:'pd111',
-                        url:'/home/question/pd/list'
+                        name:'pd111',
+                        path:'/question/pd/list'
                     }
                 ]
             },
             {
-                menuName:'user',
-                url:'/home/question/User'
+                name:'user',
+                path:'/question/User'
             }
         ]
     },
     {
-        menuName:'试卷管理',
+        name:'试卷管理',
         key:'papers',
-        childs:[
+        children:[
             {
-                menuName:'pd',
-                url:'/home/papers/Pd'
+                name:'pd',
+                path:'/papers/Pd'
             },
             {
-                menuName:'user',
-                url:'/home/papers/User'
+                name:'user',
+                path:'/papers/User'
             }
         ]
     }

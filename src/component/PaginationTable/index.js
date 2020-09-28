@@ -37,7 +37,6 @@ export default props =>{
 
     //表格分页进行切换的时候重新发起请求
     useEffect(()=>{
-        console.log('useEffect22222222')
         getDataSource();
     },[paginationState.current,paginationState.pageSize])
 
@@ -46,7 +45,7 @@ export default props =>{
         console.log('getDataSource===============')
         setTimeout(()=>{
             let { list, total } = Mock.mock({
-                [`list|${pageSize}`]:[{name:'三儿',certiCode:'333333','id|+1':1}],
+                [`list|${pageSize}`]:[{name:'三儿',certiCode:'333333',status:'1','id|+1':1}],
                 total:99
             });
             setDataSource(list);

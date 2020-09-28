@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import React, { useState, Suspense, useEffect } from 'react';
+import { Layout, Menu, Breadcrumb, Spin } from 'antd';
 import menus from 'constant/menus';
 import {
     MenuUnfoldOutlined,
@@ -17,24 +17,33 @@ export default withRouter((props) => {
 
     const [ collapsed, setCollapsed ] = useState(false);
 
+    useEffect(()=>{
+        //获取菜单列表
+        if (process.env.NODE_ENV === 'production') {
+            
+        }
+    },[]);
+
     const selectedMenuItem = props.location.pathname;
 
-    const defaultOpenKeys = selectedMenuItem.split('/').slice(2,-1);
+    const defaultOpenKeys = selectedMenuItem.split('/').slice(1,-1);
+
+
 
     const handleSubMenu = (data) => {
-        return (<SubMenu key={data.key} title={data.menuName}>
+        return (<SubMenu key={data.key} title={data.name}>
             {
-                handleMenuItem(data.childs)
+                handleMenuItem(data.children)
             }
         </SubMenu>)
     };
     const handleMenuItem = (data) => {
         return data.map((item) => {
-            if (item.childs && item.childs.length > 0) {
+            if (item.children && item.children.length > 0) {
                 return handleSubMenu(item)
             } else {
-                return (<Menu.Item key={item.url}>
-                    <Link to={`${item.url}`}>{item.menuName}</Link>
+                return (<Menu.Item key={item.path}>
+                    <Link to={`${item.path}`}>{item.name}</Link>
                 </Menu.Item>)
             }
         })
@@ -73,7 +82,7 @@ export default withRouter((props) => {
                     { handleMenu(menus) }
                 </Sider>
                 <Layout style={{ padding: '0 24px 24px' }}>
-                    <Breadcrumb style={{ margin: '16px 0' }} itemRender={item=>item.menuName} routes={menus} />
+                    {/* <Breadcrumb style={{ margin: '16px 0' }} itemRender={item=>item.name} routes={menus} /> */}
                     <Content
                         className="site-layout-background"
                         style={{
@@ -82,7 +91,9 @@ export default withRouter((props) => {
                             minHeight: 280,
                         }}
                     >
-                        {props.children}
+                        <Suspense fallback={<Spin />}>
+                            {props.children}
+                        </Suspense>
                     </Content>
                 </Layout>
             </Layout>

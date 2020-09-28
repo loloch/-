@@ -4,14 +4,11 @@ import {
     Route,useRouteMatch
 } from "react-router-dom";
 
-import Pd from 'container/PapersManagement/Pd';
-import User from 'container/PapersManagement/User';
-
-const subPath = '/papers';
+const Pd = React.lazy(()=>import('container/PapersManagement/Pd'));
+const User = React.lazy(()=>import('container/PapersManagement/User'));
 
 export default () =>{
     let { path } = useRouteMatch();
-    console.log(`${path}${subPath}/Pd`,'papersroute=============')
     return (
         <Switch>
             <Route path={`${path}/Pd`} component={Pd} />
