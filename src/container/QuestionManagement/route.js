@@ -12,10 +12,12 @@ const subPath = '/question';
 
 export default () =>{
     let { path } = useRouteMatch();
+    console.log(`${path}${subPath}/Pd`,'questionsroute=============')
+
     return (
         <Switch>
-            <Route path={`${path}${subPath}/Pd`} component={Pd} />
-            <Route path={`${path}${subPath}/User`} component={User} />
+            <Route path={`${path}/Pd`} component={Pd} />
+            <Route path={`${path}/User`} component={User} />
         </Switch>
     )
 }

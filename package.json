@@ -149,6 +149,9 @@
     ]
   },
   "alias": {
-    "container": "/container"
+    "container": "/container",
+    "common":"/common",
+    "component":"/component",
+    "constant":"/constant"
   }
 }

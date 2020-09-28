@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-import './index';
+import './index.less';
 
 const columns = [
     {

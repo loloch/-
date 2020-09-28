@@ -1,13 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
-
-import { Link, Route } from 'react-router-dom';
+import menus from 'constant/menus';
+import { Link, withRouter } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-export default ({children}) => {
-    console.log(children,'children=============')
+export default withRouter((props) => {
+
+    const selectedMenuItem = props.location.pathname;
+
+    const defaultOpenKeys = selectedMenuItem.split('/').slice(2,-1);
+
+    console.log(selectedMenuItem, defaultOpenKeys, props.children,'=======================');
+
+
+    const handleSubMenu = (data) => {
+        return (<SubMenu key={data.key} title={data.menuName}>
+            {
+                handleMenuItem(data.childs)
+            }
+        </SubMenu>)
+    };
+    const handleMenuItem = (data) => {
+        return data.map((item) => {
+            if (item.childs && item.childs.length > 0) {
+                return handleSubMenu(item)
+            } else {
+                return (<Menu.Item key={item.url}>
+                    <Link to={`${item.url}`}>{item.menuName}</Link>
+                </Menu.Item>)
+            }
+        })
+    }
+    const handleMenu = () => {
+        return (
+            <Menu
+                mode="inline" 
+                defaultOpenKeys={defaultOpenKeys.length>0?defaultOpenKeys:['papers']}
+                selectedKeys={[selectedMenuItem]}
+                style={{ height: '100%', borderRight: 0 }}
+            >
+                {handleMenuItem(menus)}
+            </Menu>
+        )
+    }
+
     return (
         <Layout>
             <Header className="header">
@@ -15,21 +53,7 @@ export default ({children}) => {
             </Header>
             <Layout>
                 <Sider width={200} className="site-layout-background">
-                    <Menu
-                        mode="inline"
-                        defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['sub1']}
-                        style={{ height: '100%', borderRight: 0 }}
-                    >
-                    <SubMenu key="sub1" title="赛题管理">
-                        <Menu.Item key="1-1"><Link to={'/home/question/Pd'}>Pd</Link></Menu.Item>
-                        <Menu.Item key="1-2"><Link to={'/home/question/User'}>User</Link></Menu.Item>
-                    </SubMenu>
-                    <SubMenu key="sub2" title="试卷管理">
-                        <Menu.Item key="2-1"><Link to={'/home/papers/Pd'}>Pd</Link></Menu.Item>
-                        <Menu.Item key="2-2"><Link to={'/home/papers/User'}>User</Link></Menu.Item>
-                    </SubMenu>
-                    </Menu>
+                    { handleMenu(menus) }
                 </Sider>
                 <Layout style={{ padding: '0 24px 24px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
@@ -45,10 +69,10 @@ export default ({children}) => {
                             minHeight: 280,
                         }}
                     >
-                        {children}
+                        {props.children}
                     </Content>
                 </Layout>
             </Layout>
         </Layout>
     )
-}
+})

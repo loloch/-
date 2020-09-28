@@ -7,12 +7,13 @@ import Home from 'container/Home';
 import QuestionManagementRoute from 'container/QuestionManagement/route';
 import PapersManagmentRoute from 'container/PapersManagement/route';
 
-
 import {
     BrowserRouter as Router,
     Switch,Redirect,
     Route
 } from "react-router-dom";
+
+const HOMEPATH = '/home';
 
 const PrivateRoute = ({children, ...rest}) => (
     <Route
@@ -32,11 +33,17 @@ export default ()=>(
     <Router>
         <Switch>
             <Route path="/login" component={Login} />
-            <PrivateRoute path="/home">
+            <PrivateRoute path={HOMEPATH}>
                 <Home>
-                    <Redirect to="/home/Pd" />
-                    <QuestionManagementRoute />
-                    <PapersManagmentRoute />
+                    <Switch>
+                        <Redirect exact from={HOMEPATH} to={`${HOMEPATH}/papers/Pd`} />
+                        <Route path={`${HOMEPATH}/papers`}>
+                            <PapersManagmentRoute />
+                        </Route>
+                        <Route path={`${HOMEPATH}/question`}>
+                            <QuestionManagementRoute />
+                        </Route>
+                    </Switch>
                 </Home>
             </PrivateRoute>
         </Switch>

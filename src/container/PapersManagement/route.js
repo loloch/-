@@ -12,10 +12,11 @@ const subPath = '/papers';
 
 export default () =>{
     let { path } = useRouteMatch();
+    console.log(`${path}${subPath}/Pd`,'papersroute=============')
     return (
         <Switch>
-            <Route path={`${path}${subPath}/Pd`} component={Pd} />
-            <Route path={`${path}${subPath}/User`} component={User} />
+            <Route path={`${path}/Pd`} component={Pd} />
+            <Route path={`${path}/User`} component={User} />
         </Switch>
     )
 }
