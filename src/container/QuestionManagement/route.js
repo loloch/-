@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,Redirect,
+    Switch,
     Route,useRouteMatch
 } from "react-router-dom";
 

@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import menus from 'constant/menus';
+import {
+    MenuUnfoldOutlined,
+    MenuFoldOutlined,
+} from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom';
+import './index';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
+const cls = 'competition-home-container';
+
 export default withRouter((props) => {
+
+    const [ collapsed, setCollapsed ] = useState(false);
 
     const selectedMenuItem = props.location.pathname;
 
     const defaultOpenKeys = selectedMenuItem.split('/').slice(2,-1);
-
-    console.log(selectedMenuItem, defaultOpenKeys, props.children,'=======================');
-
 
     const handleSubMenu = (data) => {
         return (<SubMenu key={data.key} title={data.menuName}>
@@ -47,20 +53,27 @@ export default withRouter((props) => {
     }
 
     return (
-        <Layout>
+        <Layout className={cls}>
             <Header className="header">
                 <div className="logo" />
+                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                    className: `${cls}-collapsTrigger`,
+                    style: { color:'#fff', fontSize:'20px' },
+                    onClick: ()=>setCollapsed(!collapsed),
+                })}
             </Header>
             <Layout>
-                <Sider width={200} className="site-layout-background">
+                <Sider 
+                    width={200} 
+                    className="site-layout-background"
+                    trigger={null} 
+                    collapsible 
+                    collapsed={collapsed}
+                >
                     { handleMenu(menus) }
                 </Sider>
                 <Layout style={{ padding: '0 24px 24px' }}>
-                    <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item>Home</Breadcrumb.Item>
-                        <Breadcrumb.Item>List</Breadcrumb.Item>
-                        <Breadcrumb.Item>App</Breadcrumb.Item>
-                    </Breadcrumb>
+                    <Breadcrumb style={{ margin: '16px 0' }} itemRender={item=>item.menuName} routes={menus} />
                     <Content
                         className="site-layout-background"
                         style={{
