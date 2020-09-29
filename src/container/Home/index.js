@@ -6,7 +6,7 @@ import {
     MenuFoldOutlined,
 } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom';
-import './index';
+import './index.less';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -51,7 +51,8 @@ export default withRouter((props) => {
     const handleMenu = () => {
         return (
             <Menu
-                mode="inline" 
+                mode="inline"
+                className={`${cls}-menu`} 
                 defaultOpenKeys={defaultOpenKeys.length>0?defaultOpenKeys:['papers']}
                 selectedKeys={[selectedMenuItem]}
                 style={{ height: '100%', borderRight: 0 }}
@@ -63,7 +64,7 @@ export default withRouter((props) => {
 
     return (
         <Layout className={cls}>
-            <Header className="header">
+            <Header className={`${cls}-header`}>
                 <div className="logo" />
                 {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                     className: `${cls}-collapsTrigger`,
@@ -71,9 +72,9 @@ export default withRouter((props) => {
                     onClick: ()=>setCollapsed(!collapsed),
                 })}
             </Header>
-            <Layout>
+            <Layout className="menu-content-layout">
                 <Sider 
-                    width={200} 
+                    width={255} 
                     className="site-layout-background"
                     trigger={null} 
                     collapsible 
@@ -81,17 +82,16 @@ export default withRouter((props) => {
                 >
                     { handleMenu(menus) }
                 </Sider>
-                <Layout style={{ padding: '0 24px 24px' }}>
+                <Layout className="content-layout-wrapper">
                     {/* <Breadcrumb style={{ margin: '16px 0' }} itemRender={item=>item.name} routes={menus} /> */}
                     <Content
                         className="site-layout-background"
                         style={{
-                            padding: 24,
                             margin: 0,
                             minHeight: 280,
                         }}
                     >
-                        <Suspense fallback={<Spin />}>
+                        <Suspense style={{height:'100%'}} fallback={<Spin />}>
                             {props.children}
                         </Suspense>
                     </Content>

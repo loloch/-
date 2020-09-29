@@ -3,9 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.less';
 import Route from './route';
 import * as serviceWorker from './serviceWorker';
+import zhCN from 'antd/es/locale/zh_CN';
+import {ConfigProvider} from 'antd';
 
 ReactDOM.render(
-  <Route />,
+  <ConfigProvider locale={zhCN}>
+      <Route />
+  </ConfigProvider>,
   document.getElementById('root')
 );
 

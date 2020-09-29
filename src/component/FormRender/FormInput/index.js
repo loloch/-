@@ -4,9 +4,9 @@ import { Input, Form } from 'antd';
 const FormItem = Form.Item;
 
 export default (props) => {
-    const { name, label } = props;
+    const { name, label, colon, ...rest } = props;
     return (
-        <FormItem name={name} label={label}>
+        <FormItem colon={colon} name={name} label={label} {...rest}>
             <Input />
         </FormItem>
     )

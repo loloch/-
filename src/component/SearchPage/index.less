@@ -1,8 +1,65 @@
+@import 'constant/style.less';
 .searchPage-container{
-    .btn-wrap{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .ant-page-header-heading{
+        background-color: @white-color;
+    }
+    &-searchWrap{
+        display: flex;
+        padding: 20px 40px 10px;
+    }
+    &-btnWrap{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
         button{
             width: 90px;
             margin-right: 10px;
+        }
+    }
+    &-input-col{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    &-table{
+        flex-grow: 1;
+        .ant-spin-nested-loading{
+            height: 100%;
+            .ant-spin-container{
+                height: 100%;
+                flex-direction: column;
+                display: flex;
+                .ant-table{
+                    flex-grow: 1;
+                }
+                .ant-pagination{
+                    padding-right: 60px;
+                }
+            }
+        }
+    }
+    &-search-input{
+        margin-right:20px;
+        margin-bottom: 10px;
+        label{
+            border: 1px solid #d9d9d9;
+            border-right: none;
+            padding: 0 10px 0 15px;
+        }
+        input,.ant-select{
+            width: 180px;
+        }
+        .ant-picker-input{
+            width: 157px;
+            text-align: center;
+        }
+        .ant-picker-range-separator{
+            padding: 0;
+        }
+        .ant-picker{
+            width: 380px;
         }
     }
 }

@@ -8,6 +8,8 @@ export default () =>{
     
     const formConfig = [
         { label:'实验名称', name:'name', type:'Input' },
+        { label:'实验id', name:'id', type:'Input' },
+        { label:'启动日期', name:'date', type:'RangePicker' },
         { 
             label:'状态', 
             name:'status', 
@@ -33,11 +35,9 @@ export default () =>{
     ]
 
     return (
-        <div>
             <SearchPage 
                 formConfig={formConfig}
                 columns={columns}
             />
-        </div>
     )
 }

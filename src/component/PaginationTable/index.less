@@ -1,0 +1,31 @@
+@import 'constant/style.less';
+.paginationTable-container{
+    .ant-table-header{
+        thead{
+            th{
+                background-color: #fff;
+            }
+        }
+    }
+    .ant-table-body{
+        &::-webkit-scrollbar{
+            background-color: @white-color;
+            width: 8px;
+
+        }
+        &::-webkit-scrollbar-thumb{
+            background-color:@theme-color;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-button{
+            display: none;
+        }
+        .ant-table-row{
+            &:hover{
+                td{
+                    background-color: #ddf9ec!important;
+                }
+            }
+        }
+    }
+}

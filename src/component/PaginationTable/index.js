@@ -1,20 +1,27 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Table } from 'antd';
+import classNames from 'classnames';
 import { useCompare } from 'common/usehooks';
+import './index.less';
 var Mock = require('mockjs')
 
+const cascaderPrefixCls = 'paginationTable-container';
 
 export default props =>{
 
-    const { params, pagination,...rest } = props;
+    const { params, pagination, className,...rest } = props;
 
     const [ dataSource, setDataSource ] = useState([]);
+
+    const [ loading, setLoading ] = useState(false);
+
     const [ paginationState, setPaginationState ] = useState({
         pageSize: 10,
         pageSizeOptions: ['5', '10', '20', '30'],
         showSizeChanger: true,
         showQuickJumper: true,
         current: 1,
+        size:'default',
         ...pagination
     }) ;
 
@@ -42,6 +49,7 @@ export default props =>{
 
     const getDataSource = () =>{
         const { current, pageSize } = paginationState;
+        setLoading(true);
         console.log('getDataSource===============')
         setTimeout(()=>{
             let { list, total } = Mock.mock({
@@ -49,13 +57,23 @@ export default props =>{
                 total:99
             });
             setDataSource(list);
+            setLoading(false);
             setPaginationState({...paginationState, total})
-        })
+        },300)
     }
 
+    const cls = classNames({
+        [cascaderPrefixCls]: true,
+        [className]: className
+    })
+
     return (
-        <Table 
+        <Table
+            className={cls}
+            loading={loading}
+            size={'middle'} 
             rowKey={r=>r.id}
+            // scroll={{y:400}}
             dataSource={dataSource}
             pagination={paginationState}
             onChange={setPaginationState}

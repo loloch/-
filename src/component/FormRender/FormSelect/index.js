@@ -5,9 +5,9 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 export default (props) => {
-    const { name, label, options } = props; 
+    const { name, label, options, colon, ...rest } = props; 
     return (
-        <FormItem name={name} label={label}>
+        <FormItem name={name} label={label} colon={colon} {...rest}>
             <Select>
                 {
                    options.map(item=>(
