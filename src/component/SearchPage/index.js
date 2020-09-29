@@ -11,24 +11,40 @@ export default ( props ) => {
 
     const [ params, setParams ] = useState({});
 
+    const [form] = Form.useForm();
+
     const onValuesChange = (changedValues, allValues) =>{
-        const [ type, name ] = Object.keys(changedValues)[0].split('-');
-        if(['Select','DatePicker'].includes(type)){
-            setParams(()=>{
-                let newParams = {};
-                for(let i in allValues){
-                    let iArr = i.split('-');
-                    newParams[iArr[iArr.length-1]] = allValues[i]
-                };
-                return newParams;
-            })
+        const [ type ] = Object.keys(changedValues)[0].split('-');
+        if(['Select','RangePicker'].includes(type)){
+            setParams(dealParams(allValues))
         }
+    }
+
+    const onFinish = (allValues) =>{
+        console.log(allValues,'allValues=============')
+        setParams(dealParams(allValues))
+    }
+
+    const onReset = () => {
+        form.resetFields();
+        setParams({});
+    }
+
+    const dealParams = (allValues) =>{
+        let newParams = {};
+        for(let i in allValues){
+            let iArr = i.split('-');
+            newParams[iArr[iArr.length-1]] = allValues[i]
+        };
+        return newParams;
     }
 
     return (
         <Form 
             className={cls}
+            form={form}
             onValuesChange={onValuesChange}
+            onFinish={onFinish}
         >
             <PageHeader 
                 title="试卷管理" 
@@ -57,9 +73,9 @@ export default ( props ) => {
                     {/* </Space> */}
                 </div>
                 <div className={`${cls}-btnWrap`}>
-                    <Button type="primary">查询</Button>
-                    <Button>重置</Button>
-                    <Button disabled>导出</Button>
+                    <Button type="primary" htmlType="submit">查询</Button>
+                    <Button onClick={onReset}>重置</Button>
+                    {exportConfig&&<Button disabled>导出</Button>}
                 </div>
             </div>
             <PaginationTable

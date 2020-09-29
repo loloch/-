@@ -1,9 +1,14 @@
 @import 'constant/style.less';
 .paginationTable-container{
-    .ant-table-header{
-        thead{
-            th{
-                background-color: #fff;
+    thead{
+        th{
+            background-color: #fff;
+        }
+    }
+    .ant-table-row{
+        &:hover{
+            td{
+                background-color: #d0fbe1!important;
             }
         }
     }
@@ -20,12 +25,6 @@
         &::-webkit-scrollbar-button{
             display: none;
         }
-        .ant-table-row{
-            &:hover{
-                td{
-                    background-color: #ddf9ec!important;
-                }
-            }
-        }
+        
     }
 }

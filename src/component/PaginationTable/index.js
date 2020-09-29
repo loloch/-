@@ -6,6 +6,7 @@ import './index.less';
 var Mock = require('mockjs')
 
 const cascaderPrefixCls = 'paginationTable-container';
+const textStyle = { color:'#0fbf73' };
 
 export default props =>{
 
@@ -58,7 +59,11 @@ export default props =>{
             });
             setDataSource(list);
             setLoading(false);
-            setPaginationState({...paginationState, total})
+            setPaginationState({
+                ...paginationState, 
+            showTotal:total=>(<div>共<span style={textStyle}>{total}</span>条记录 第<span style={textStyle}>{current}</span>/{`${Math.ceil(total/pageSize)}`}页</div>),
+                total
+            })
         },300)
     }
 
