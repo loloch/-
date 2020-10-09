@@ -7,7 +7,7 @@ import './index.less';
 const cls = 'searchPage-container';
 
 export default ( props ) => {
-    const { formConfig, exportConfig, columns } = props;
+    const { formConfig, exportConfig, columns, headerExtra } = props;
 
     const [ params, setParams ] = useState({});
 
@@ -48,11 +48,7 @@ export default ( props ) => {
         >
             <PageHeader 
                 title="试卷管理" 
-                extra={[
-                    <Button type="primary">新建</Button>,
-                    <Button type="primary">新建</Button>,
-                    <Button type="primary">新建</Button>
-                ]}
+                extra={headerExtra}
             />
             <div className={`${cls}-searchWrap`}>
                 <div className={`${cls}-input-col`}>
@@ -84,6 +80,7 @@ export default ( props ) => {
                 params={params}
                 columns={columns}
             />
+            {props.children||null}
         </Form>
     )
 }
