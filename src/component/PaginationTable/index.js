@@ -20,7 +20,6 @@ export default props =>{
         pageSize: 10,
         pageSizeOptions: ['5', '10', '20', '30'],
         showSizeChanger: true,
-        showQuickJumper: true,
         current: 1,
         size:'default',
         ...pagination
@@ -30,6 +29,7 @@ export default props =>{
 
     //表格请求参数有变化的时候执行
     useEffect(()=>{
+
         //第一次挂载组件的时候不执行，否则会请求两次
         if(firstUpdate.current){
             firstUpdate.current = false;
@@ -51,7 +51,7 @@ export default props =>{
     const getDataSource = () =>{
         const { current, pageSize } = paginationState;
         setLoading(true);
-        console.log('getDataSource===============')
+        // console.log(current,'getDataSource===============')
         setTimeout(()=>{
             let { list, total } = Mock.mock({
                 [`list|${pageSize}`]:[{name:'三儿',certiCode:'333333',status:'1','id|+1':1}],
@@ -81,7 +81,7 @@ export default props =>{
             // scroll={{y:400}}
             dataSource={dataSource}
             pagination={paginationState}
-            onChange={setPaginationState}
+            onChange={(...params)=>{console.log(...params,'00000000');setPaginationState(...params)}}
             {...rest}
         />   
     )

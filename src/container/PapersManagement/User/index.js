@@ -26,6 +26,8 @@ export default () =>{
 
     const [ visible, setVisible ] = useState(false);
 
+    const [ updateTime, setUpdateTime ] = useState('');
+
     const modelFields = [
         {
             formItemProps:{
@@ -52,7 +54,12 @@ export default () =>{
                 shouldUpdate:(preValues, currentValues) => preValues.jobClass!==currentValues.jobClass,
             },
             renderItem(_, {getFieldValue}){
-                return <Select2 options={getFieldValue('jobClass')==='1'?secondOptions:secondOptions2} />
+                console.log(getFieldValue('jobClass'),'=================')
+                return (
+                    <Select2 
+                        options={getFieldValue('jobClass')?(getFieldValue('jobClass')==='1'?secondOptions:secondOptions2):[]} 
+                    />
+                ) 
             }
         },
         {
@@ -65,7 +72,7 @@ export default () =>{
                 noStyle:true
             },
             renderItem(_, {getFieldValue}){
-                return getFieldValue('job')[0] === '2'&&<Input />
+                return getFieldValue('job') === '22'&&<Input />
             }
         }
 
@@ -106,6 +113,7 @@ export default () =>{
     const onOkCb = (values) => {
         console.log(values,'values=============');
         setVisible(false);
+        setUpdateTime(new Date().getTime());
     }
 
     return (
@@ -113,17 +121,18 @@ export default () =>{
                 formConfig={formConfig}
                 headerExtra={headerExtra}
                 columns={columns}
+                updateTime={updateTime}
             >
                 <FormRender
                     visible={visible}
                     onCancel={()=>setVisible(false)}
                     onOkCb={onOkCb}
                     modelFields={modelFields} 
-                    initialValues={{
-                        jobClass:'2',
-                        job:'22',
-                        company:'奇虎360'
-                    }}
+                    // initialValues={{
+                    //     jobClass:'2',
+                    //     job:'22',
+                    //     company:'奇虎360'
+                    // }}
                 />
             </SearchPage>
     )

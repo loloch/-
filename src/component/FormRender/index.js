@@ -1,6 +1,5 @@
-import React from 'react';
-import { Form, Modal, Row, Col, Input } from 'antd';    
-import { get } from 'http';
+import React, { useEffect } from 'react';
+import { Form, Modal, Row, Col } from 'antd';    
 
 const FormItem = Form.Item;
 
@@ -8,7 +7,11 @@ export default props => {
 
     const [form] = Form.useForm();
 
-    const { visible, modelFields, isPage, defaultFormLayout, initialValues, onCancel, onOkCb } = props;
+    const { visible, modelFields, isPage, defaultFormLayout, initialValues={}, onCancel, onOkCb } = props;
+
+    useEffect(()=>{
+        !visible && form.resetFields();
+    }, [visible])
 
     const formLayout =
         defaultFormLayout ||
@@ -30,12 +33,15 @@ export default props => {
                 {
                     modelFields.map(item=>{
                         if (!!item.responsive) responsive = item.responsive;
-                        const formChildren = () => (
-                            item.renderItem(item, form)?
-                            <FormItem { ...item.formItemProps }>
-                                {item.renderItem(item, form)}
-                            </FormItem>:null
-                        )
+                        const formChildren = () => {
+                            const renderItem = item.renderItem(item, form);
+                            return (
+                                renderItem?
+                                <FormItem { ...item.formItemProps }>
+                                    {renderItem}
+                                </FormItem>:null
+                            )
+                        } 
                         return (
                             <Col { ...responsive } key={item.formItemProps.name}>
                                 {

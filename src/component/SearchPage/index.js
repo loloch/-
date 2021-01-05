@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, PageHeader } from 'antd';
 import PaginationTable from 'component/PaginationTable';
 import * as SearchItems from './SearchItems';
@@ -13,6 +13,12 @@ export default ( props ) => {
 
     const [form] = Form.useForm();
 
+    useEffect(()=>{
+        props.updateTime&&setParams({
+            ...params,
+            updateTime:props.updateTime
+        })
+    },[props.updateTime])
     const onValuesChange = (changedValues, allValues) =>{
         const [ type ] = Object.keys(changedValues)[0].split('-');
         if(['Select','RangePicker'].includes(type)){
@@ -21,7 +27,6 @@ export default ( props ) => {
     }
 
     const onFinish = (allValues) =>{
-        console.log(allValues,'allValues=============')
         setParams(dealParams(allValues))
     }
 
