@@ -42,3 +42,15 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
+此项目是为后台管理系统所搭建的标准工程；
+
+后台管理系统功能通常为数据的增删改查，各业务模块之间包含大量重复的功能逻辑；普遍的页面样式为 查询条件 + 分页数据表格，功能基本包含新建数据，编辑数据，删除数据；若不将功能模块封装，会造成各开发人员对业务逻辑外的功能逻辑造成大量的重复开发；
+
+本项目功能使用react(v16.8以上)+webpack(v5.0)+antd(v4.0)版本进行搭建，使用react最新提供的hooks进行封装，对查询条件，分页表格组件进行封装，使得可以进行配置化开发。
+
+封装组件路径 src/component/  FormRender(查询条件) + PaginationTable(分页组件) + SearchPage(整合页面)
+
+案例路径 src/container/PapersManagement/User/index.js
